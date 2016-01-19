@@ -1,0 +1,6 @@
+web:  
+  image: unws/jekyll
+  volumes:
+    - .:/html
+  ports:
+    - "4000:4000"
