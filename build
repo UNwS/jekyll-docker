@@ -44,7 +44,7 @@ port="4000"
 [ $# -eq 0 ] && usage
 while getopts "d:n:s:p:t:r:h" arg; do
   case $arg in
-    p) # Jekyll port (optional)
+    p) # Jekyll port (optional) - NOT Supported now
       port=${OPTARG}
       ;;
     t) # docker image tag (optional)
