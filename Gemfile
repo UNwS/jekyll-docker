@@ -27,3 +27,5 @@ gem 'github-pages', versions['github-pages']
 gem 'html-pipeline', versions['html-pipeline']
 gem 'sass', versions['sass']
 gem 'safe_yaml', versions['safe_yaml']
+
+get 'html-proofer'

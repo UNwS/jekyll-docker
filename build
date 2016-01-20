@@ -3,19 +3,21 @@
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 post_limit=0
 [ $# -eq 0 ] && usage
-while getopts ":hd:s:n:" arg; do
+while getopts ":hd:s:n:r" arg; do
   case $arg in
     d) # default source, used internal.
       default_src=${OPTARG}
       ;;
     n) # number of post limit for generatation.
       post_limit=${OPTARG}
-      echo $pst_limit
       ;;
     s) # git source utl for the site.
       page=${OPTARG}
-      echo $page
       ;;
+    r) # run the docker-compose with url.
+      web=${OPTARG}
+      sudo docker-compose run web -s $web
+      exit $?            
     h | *) # Display help.
       usage
       exit 0
