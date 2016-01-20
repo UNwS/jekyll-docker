@@ -1,4 +1,5 @@
 #!/bin/bash
+# Vipin Madhavanunni <vipmadha@gmail.com>
 
 this=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
@@ -7,20 +8,30 @@ trap exit_fuc 0
 
 docker_gen_file() { cat > docker-compose-$this.yml << EOL
 web:  
-  image: unws/gh-pages:bleeding
+  image: unws/gh-pages:$tag
   volumes:
     - /tmp/gh-pages-$this:/html
   ports:
-    - "4000:4000"
+    - "$port:$port"
 EOL
 }
+
 docker_run() { mkdir /tmp/gh-pages-$this ; sudo docker-compose pull; sudo docker-compose -f docker-compose-$this.yml run web -s $web; }
+
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 post_limit=0
+tag="stable"
+port="4000"
 
 [ $# -eq 0 ] && usage
-while getopts ":hd:s:n:r:" arg; do
+while getopts ":hd:s:n:r:t:p:" arg; do
   case $arg in
+    p) # Jekyll port
+      port=${OPTARG}
+      ;;
+    t) # docker image tag
+      tag=${OPTARG}
+      ;;
     d) # default source, used internal.
       default_src=${OPTARG}
       ;;
