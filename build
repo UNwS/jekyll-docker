@@ -3,10 +3,20 @@
 
 this=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
-exit_fuc() { sudo docker-compose rm -f web-$this; sudo rm -rf /tmp/gh-pages-$this; sudo rm -f docker-compose-$this.yml; }
+exit_fuc() 
+{
+  this_check=$(sudo docker-compose ps web-$this 2> /dev/null | tail -1) 
+  if [[ $this_check == *"web-$this"* ]]; then
+    sudo docker-compose rm -f web-$this
+  fi
+  sudo rm -rf /tmp/gh-pages-$this
+  sudo rm -f docker-compose-$this.yml
+}
 trap exit_fuc 0
 
-docker_gen_file() { cat > docker-compose-$this.yml << EOL
+docker_gen_file()
+{ 
+cat > docker-compose-$this.yml << EOL
 web-$this:  
   image: unws/gh-pages:$tag
   volumes:
@@ -16,7 +26,12 @@ web-$this:
 EOL
 }
 
-docker_run() { mkdir /tmp/gh-pages-$this ; sudo docker-compose pull unws/gh-pages:$tag; sudo docker-compose -f docker-compose-$this.yml run web-$this -s $gitsrc; }
+docker_run() 
+{
+  mkdir /tmp/gh-pages-$this
+  sudo docker-compose pull unws/gh-pages:$tag
+  sudo docker-compose -f docker-compose-$this.yml run web-$this -s $gitsrc
+}
 
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 post_limit=0

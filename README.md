@@ -5,7 +5,7 @@ This Docker image can be used for Jekyll build which needs to be compatible with
  - [Install docker](https://docs.docker.com/engine/installation/)
  - [Install docker-compose](https://docs.docker.com/compose/install/)
  - git clone https://github.com/UNwS/jekyll-docker
- - ./build -r <your jekyll github repo>
+ - ./build -r {your jekyll github repo}
  - open [http://0.0.0.0:4000/](http://0.0.0.0:4000/)
 
 ## Custom
