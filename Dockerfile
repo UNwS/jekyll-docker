@@ -46,5 +46,5 @@ WORKDIR /html
 EXPOSE 4000
 
 # Run jekyll serve
-ENTRYPOINT ["/tmp/build", "-d $page"]
+ENTRYPOINT ["/tmp/build", "-d", "$page"]
 
