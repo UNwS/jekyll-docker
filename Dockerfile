@@ -18,6 +18,10 @@ RUN echo 'gem: --no-document' >> ~/.gemrc && \
 # Install bundler
 RUN gem install bundler 
 
+# Get gemfile to get all suported pakage for jekyll in gethub pages
+WORKDIR /tmp
+COPY Gemfile Gemfile
+
 # lets install all required gems
 RUN bundle config build.nokogiri --use-system-libraries 
 RUN bundle config build.jekyll --no-rdoc
@@ -30,7 +34,7 @@ RUN find / -type f -iname \*.apk-new -delete && \
   rm -rf ~/.gem 
 
 # Copy source
-RUN mkdir -p /src
+RUN mkdir -p /html
 VOLUME ["/html"]
 WORKDIR /html
 
