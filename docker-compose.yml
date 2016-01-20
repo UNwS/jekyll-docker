@@ -1,5 +1,5 @@
 web:  
-  image: unws/gh-pages
+  image: unws/gh-pages:bleeding
   volumes:
     - /tmp/gh-pages:/html
   ports:

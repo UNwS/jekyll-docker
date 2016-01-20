@@ -36,7 +36,7 @@ docker_run()
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 post_limit=0
 build_run=0
-tag="stable"
+tag="latest"
 port="4000"
 
 [ $# -eq 0 ] && usage
