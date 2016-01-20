@@ -11,7 +11,7 @@ ENV page="https://github.com/thekkedam/vm"
 # Install all the dependencies for Jekyll
 RUN apk add --update bash build-base libffi-dev zlib-dev libxml2-dev \
 			libxslt-dev ruby ruby-dev ruby-io-console ruby-json \
-			yaml nodejs git
+			yaml nodejs git perl
 
 # let avoide rdoc
 RUN echo 'gem: --no-document' >> ~/.gemrc && \

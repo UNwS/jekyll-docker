@@ -3,11 +3,11 @@
 
 this=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
-exit_fuc() { sudo rm -rf /tmp/gh-pages-$this; sudo rm -f docker-compose-$this.yml; }
+exit_fuc() { sudo docker-compose rm -f web-$this; sudo rm -rf /tmp/gh-pages-$this; sudo rm -f docker-compose-$this.yml; }
 trap exit_fuc 0
 
 docker_gen_file() { cat > docker-compose-$this.yml << EOL
-web:  
+web-$this:  
   image: unws/gh-pages:$tag
   volumes:
     - /tmp/gh-pages-$this:/html
@@ -16,36 +16,35 @@ web:
 EOL
 }
 
-docker_run() { mkdir /tmp/gh-pages-$this ; sudo docker-compose pull; sudo docker-compose -f docker-compose-$this.yml run web -s $web; }
+docker_run() { mkdir /tmp/gh-pages-$this ; sudo docker-compose pull unws/gh-pages:$tag; sudo docker-compose -f docker-compose-$this.yml run web-$this -s $gitsrc; }
 
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 post_limit=0
+build_run=0
 tag="stable"
 port="4000"
 
 [ $# -eq 0 ] && usage
-while getopts ":hd:s:n:r:t:p:" arg; do
+while getopts "d:n:s:p:t:r:h" arg; do
   case $arg in
-    p) # Jekyll port
+    p) # Jekyll port (optional)
       port=${OPTARG}
       ;;
-    t) # docker image tag
+    t) # docker image tag (optional)
       tag=${OPTARG}
       ;;
-    d) # default source, used internal.
+    d) # default source, used internal. (Not required)
       default_src=${OPTARG}
       ;;
-    n) # number of post limit for generatation.
+    n) # number of post limit for generatation. (optional)
       post_limit=${OPTARG}
       ;;
-    s) # git source utl for the site.
+    s) # git source utl for the site. (mandatory)
       page=${OPTARG}
       ;;
-    r) # run the docker-compose with url.
-      web=${OPTARG}
-      docker_gen_file
-      docker_run
-      exit $?            
+    r) # run the docker-compose with url. (mandatory to run)
+      gitsrc=${OPTARG}
+      build_run=1
       ;;
     h | *) # Display help.
       usage
@@ -53,6 +52,12 @@ while getopts ":hd:s:n:r:t:p:" arg; do
       ;;
   esac
 done
+
+if [ "$build_run" -eq 1 ]; then
+  docker_gen_file
+  docker_run
+  exit $?
+fi
 
 if [ -z $page ]; then
   git clone $default_src .
