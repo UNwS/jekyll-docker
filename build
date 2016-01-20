@@ -31,7 +31,7 @@ EOL
 docker_run() 
 {
   mkdir /tmp/gh-pages-$this
-  sudo docker-compose pull unws/gh-pages:$tag
+  sudo docker pull unws/gh-pages:$tag
   sudo docker-compose -f docker-compose-$this.yml run web-$this -s $gitsrc
 }
 
