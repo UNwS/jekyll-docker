@@ -5,12 +5,14 @@ this=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
 exit_fuc() 
 {
-  this_check=$(sudo docker-compose ps web-$this 2> /dev/null | tail -1) 
-  if [[ $this_check == *"web-$this"* ]]; then
-    sudo docker-compose rm -f web-$this
+  if type "sudo" > /dev/null 2>&1 ; then
+    this_check=$(sudo docker-compose ps web-$this 2> /dev/null | tail -1) 
+    if [[ $this_check == *"web-$this"* ]]; then
+      sudo docker-compose rm -f web-$this
+    fi
+    sudo rm -rf /tmp/gh-pages-$this 
+    sudo rm -f docker-compose-$this.yml 
   fi
-  sudo rm -rf /tmp/gh-pages-$this
-  sudo rm -f docker-compose-$this.yml
 }
 trap exit_fuc 0
 
