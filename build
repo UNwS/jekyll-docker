@@ -2,8 +2,8 @@
 
 this=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
-exit_fuc() { rm -rf /tmp/gh-pages-$this; rm -f docker-compose-$this.yml; }
-trap exit_fuc 1 2 3 6 15
+exit_fuc() { sudo rm -rf /tmp/gh-pages-$this; sudo rm -f docker-compose-$this.yml; }
+trap exit_fuc 0
 
 docker_gen_file() { cat > docker-compose-$this.yml << EOL
 web:  
@@ -45,8 +45,10 @@ done
 
 if [ -z $page ]; then
   git clone $default_src .
+  git submodule update --init --recursive
 else
   git clone $page .
+  git submodule update --init --recursive
 fi
 
 if [[ "$post_limit" -gt 0 ]]; then
