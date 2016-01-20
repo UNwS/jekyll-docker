@@ -1,6 +1,7 @@
 #!/bin/bash
 
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
+post_limit=0
 [ $# -eq 0 ] && usage
 while getopts ":hd:s:n:" arg; do
   case $arg in
