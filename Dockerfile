@@ -1,10 +1,12 @@
 FROM alpine:latest
-ARG page=https://github.com/thekkedam/vm
 MAINTAINER Vipin Madhavanunni <vipintm@gmail.com>
 LABEL site="unwsolution.com" \
 	version="1.0" \
 	description="Jekyll Docker image"	\
 	source="https://github.com/UNwS/jekyll-docker"
+
+# default source
+ENV page="https://github.com/thekkedam/vm"
 
 # Install all the dependencies for Jekyll
 RUN apk add --update bash build-base libffi-dev zlib-dev libxml2-dev \
