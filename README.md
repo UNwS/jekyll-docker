@@ -14,7 +14,6 @@ This Docker image can be used for Jekyll build which needs to be compatible with
  - "-l" option to generate only specific number of posts
 
 ## Problem?
-Contact in [![Gitter](https://badges.gitter.im/UNwS/jekyll-docker.svg)](https://gitter.im/UNwS/jekyll-docker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 File bug at [GitHub new issue](https://github.com/UNwS/jekyll-docker/issues/new)
 
 ## More
