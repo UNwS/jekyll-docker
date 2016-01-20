@@ -8,6 +8,7 @@ This Docker image can be used for Jekyll build which needs to be compatible with
 
 ## Custom
  - Add a script "build" in repo with specific jekyll commands - build will be run insted of standard jekyll command
+   - [optional] use build -r -l {no} : -r can be used to seprate running and other operations -l accept the no of pages
  - Options
    - Generate only specific number of posts -l default: all
    - dockerimage -t {latest:bleeding} default: latest

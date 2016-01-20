@@ -87,7 +87,7 @@ fi
 if [[ "$post_limit" -gt 0 ]]; then
   echo -e "\033[1;33m[WARN] Telling jekyll to only generate the last $post_limit posts. \033[0m"
   if [ -f build ]; then
-    ./build -r
+    ./build -r -l $post_limit
   else
     bundle exec jekyll serve --limit_posts "$post_limit"
   fi
