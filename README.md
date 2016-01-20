@@ -2,10 +2,11 @@
 This Docker image can be used for Jekyll build which needs to be compatible with GitHub pages (gh-pages). This is a one-short way to generate the site local and test, if you like docker :)
 
 ## HowTo
- 1) [Install docker](https://docs.docker.com/engine/installation/)
- 2) [Install docker-compose](https://docs.docker.com/compose/install/)
- 3) git clone https://github.com/UNwS/jekyll-docker
- 4) ./build -r <your jekyll github repo>
+ - [Install docker](https://docs.docker.com/engine/installation/)
+ - [Install docker-compose](https://docs.docker.com/compose/install/)
+ - git clone https://github.com/UNwS/jekyll-docker
+ - ./build -r <your jekyll github repo>
+ - open [http://0.0.0.0:4000/](http://0.0.0.0:4000/)
 
 ## Custom
  - Add a script "build" in repo with specific jekyll commands
