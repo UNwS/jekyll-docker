@@ -1,9 +1,25 @@
 #!/bin/bash
 
+this=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+
+exit_fuc() { rm -rf /tmp/gh-pages-$this; rm -f docker-compose-$this.yml }
+trap exit_fuc 1 2 3 6 15
+
+docker_gen_file() { cat > docker-compose-$this.yml << EOL
+web:  
+  image: unws/gh-pages:bleeding
+  volumes:
+    - /tmp/gh-pages-$this:/html
+  ports:
+    - "4000:4000"
+EOL
+}
+docker_run() { mkdir /tmp/gh-pages-$this ; sudo docker-compose -f docker-compose-$this.yml run web -s $web; }
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 post_limit=0
+
 [ $# -eq 0 ] && usage
-while getopts ":hd:s:n:r" arg; do
+while getopts ":hd:s:n:r:" arg; do
   case $arg in
     d) # default source, used internal.
       default_src=${OPTARG}
@@ -16,7 +32,8 @@ while getopts ":hd:s:n:r" arg; do
       ;;
     r) # run the docker-compose with url.
       web=${OPTARG}
-      sudo docker-compose run web -s $web
+      docker_gen_file
+      docker_run
       exit $?            
       ;;
     h | *) # Display help.
@@ -34,7 +51,15 @@ fi
 
 if [[ "$post_limit" -gt 0 ]]; then
   echo -e "\033[1;33m[WARN] Telling jekyll to only generate the last $post_limit posts. \033[0m"
-  bundle exec jekyll serve --limit_posts "$post_limit"
+  if [ -f build ]; then
+    ./build -r
+  else
+    bundle exec jekyll serve --limit_posts "$post_limit"
+  fi
 else
-  bundle exec jekyll serve
+  if [ -f build ]; then
+    ./build -r
+  else
+    bundle exec jekyll serve
+  fi
 fi
