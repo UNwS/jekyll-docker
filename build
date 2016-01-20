@@ -2,7 +2,7 @@
 
 this=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
-exit_fuc() { rm -rf /tmp/gh-pages-$this; rm -f docker-compose-$this.yml }
+exit_fuc() { rm -rf /tmp/gh-pages-$this; rm -f docker-compose-$this.yml; }
 trap exit_fuc 1 2 3 6 15
 
 docker_gen_file() { cat > docker-compose-$this.yml << EOL
@@ -14,7 +14,7 @@ web:
     - "4000:4000"
 EOL
 }
-docker_run() { mkdir /tmp/gh-pages-$this ; sudo docker-compose -f docker-compose-$this.yml run web -s $web; }
+docker_run() { mkdir /tmp/gh-pages-$this ; sudo docker-compose pull; sudo docker-compose -f docker-compose-$this.yml run web -s $web; }
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 post_limit=0
 
