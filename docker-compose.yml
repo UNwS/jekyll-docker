@@ -1,5 +1,5 @@
 web:  
-  image: unws/jekyll
+  image: unws/gh-pages
   volumes:
     - .:/html
   ports:

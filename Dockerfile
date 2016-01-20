@@ -1,4 +1,5 @@
 FROM alpine:latest
+ARG page=https://github.com/thekkedam/vm
 MAINTAINER Vipin Madhavanunni <vipintm@gmail.com>
 LABEL site="unwsolution.com" \
 	version="1.0" \
@@ -21,6 +22,7 @@ RUN gem install bundler
 # Get gemfile to get all suported pakage for jekyll in gethub pages
 WORKDIR /tmp
 COPY Gemfile Gemfile
+COPY build build
 
 # lets install all required gems
 RUN bundle config build.nokogiri --use-system-libraries 
@@ -42,5 +44,5 @@ WORKDIR /html
 EXPOSE 4000
 
 # Run jekyll serve
-CMD ["ls"]
+ENTRYPOINT ["/tmp/build", "-d $page"]
 
