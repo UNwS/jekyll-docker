@@ -32,6 +32,7 @@ docker_run()
 {
   mkdir /tmp/gh-pages-$this
   sudo docker pull unws/gh-pages:$tag
+  cat docker-compose-$this.yml
   sudo docker-compose -f docker-compose-$this.yml run web-$this -s $gitsrc
 }
 
@@ -39,7 +40,7 @@ usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 post_limit=0
 build_run=0
 tag="latest"
-port="4000"
+port=4000
 
 [ $# -eq 0 ] && usage
 while getopts "d:n:s:p:t:r:h" arg; do
@@ -82,6 +83,10 @@ if [ -z $page ]; then
 else
   git clone $page .
   git submodule update --init --recursive
+fi
+
+if type "ifconfig" > /dev/null 2>&1 ; then
+  ifconfig
 fi
 
 if [[ "$post_limit" -gt 0 ]]; then
