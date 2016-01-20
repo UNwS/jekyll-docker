@@ -18,6 +18,7 @@ while getopts ":hd:s:n:r" arg; do
       web=${OPTARG}
       sudo docker-compose run web -s $web
       exit $?            
+      ;;
     h | *) # Display help.
       usage
       exit 0
