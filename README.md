@@ -1,13 +1,13 @@
-# jekyll docker
-This Docker image can be used for Jekyll build which needs to be compatible with GitHub pages (gh-pages). This is a one-short way to generate the site local and test, if you like docker :)
+# Jekyll docker
+This Docker image can be used for Jekyll build which needs to be compatible with GitHub pages (gh-pages). This is a one-shot way to generate the site local and test if you like Docker :)
 
 ## HowTo
  - git clone https://github.com/UNwS/jekyll-docker or wget -o build -c https://raw.githubusercontent.com/UNwS/jekyll-docker/master/build
  - ./build -r {your jekyll github repo}
- - console show the url to open -> 
+ - console show the url to open ->
 
 ## Custom
- - Add a script "build" in repo with specific jekyll commands - build will be run insted of standard jekyll command
+ - Add a script "build" in repo with specific Jekyll commands - build will be run instead of standard Jekyll command
    - [optional] use build -r -l {no} -p {port no} : -r can be used to seprate running and other operations -l accept the no of pages -p for the port
  - Options
    - Generate only specific number of posts -l default: all
