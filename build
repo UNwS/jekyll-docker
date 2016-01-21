@@ -19,7 +19,7 @@ trap exit_fuc 0
 docker_check()
 {
   docker_id=$(docker info 2> /dev/null | grep ^ID:)
-  if [ -z $docker_id ]; then
+  if [ -z "$docker_id" ]; then
     echo "Unable to connect to docker ..."
     echo "       May be need to use sudo ..."
     exit 1
@@ -73,12 +73,27 @@ jekyll_run()
   fi
 }
 
+pwd_safe()
+{
+  cpwd=$(pwd)
+  if [ "$cpwd" != "/html" ]
+    echo "Running inside host .."
+    cd /tmp/gh-pages-$this
+    echo "Switching to temp ..."
+    pwd
+  fi
+}
+
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 
 ### MAIN ###
-docker_check
 post_limit=0
 build_run=0
+build_port=0
+build_tag=0
+build_dsrc=0
+build_limit=0
+build_page=0
 tag="latest"
 port=4000
 
@@ -87,18 +102,23 @@ while getopts "d:n:s:p:t:r:h" arg; do
   case $arg in
     p) # Jekyll port (optional) - NOT Supported now
       port=${OPTARG}
+      build_port=1
       ;;
     t) # docker image tag (optional)
       tag=${OPTARG}
+      build_tag=1
       ;;
     d) # default source, used internal. (Not required)
       default_src=${OPTARG}
+      build_dsrc=1
       ;;
     n) # number of post limit for generatation. (optional)
       post_limit=${OPTARG}
+      build_limit=1
       ;;
     s) # git source utl for the site. (mandatory)
       page=${OPTARG}
+      build_page=1
       ;;
     r) # run the docker-compose with url. (mandatory to run)
       gitsrc=${OPTARG}
@@ -111,17 +131,22 @@ while getopts "d:n:s:p:t:r:h" arg; do
   esac
 done
 
+### Host ###
 if [ "$build_run" -eq 1 ]; then
+  docker_check
   docker_gen_file
   docker_run
   exit $?
 fi
 
-if [ -z $page ]; then
-  git clone $default_src .
-  git submodule update --init --recursive
-else
+### Container ###
+pwd_safe
+
+if [ "$build_page" -eq 1 ]; then
   git clone $page .
+  git submodule update --init --recursive
+elif [ "$build_dsrc" -eq 1 ]; then
+  git clone $default_src .
   git submodule update --init --recursive
 fi
 
