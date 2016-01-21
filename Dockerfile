@@ -42,9 +42,6 @@ RUN mkdir -p /html
 VOLUME ["/html"]
 WORKDIR /html
 
-# Jekyll runs on port 4000 by default
-EXPOSE 4000
-
 # Run jekyll serve
 ENTRYPOINT ["/tmp/build", "-d", "$page"]
 
