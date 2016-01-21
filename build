@@ -77,9 +77,11 @@ pwd_safe()
 {
   cpwd=$(pwd)
   if [ "$cpwd" != "/html" ]
-    echo "Running inside host .."
+    echo "Looks this is running inside host .."
     cd /tmp/gh-pages-$this
     echo "Switching to temp ..."
+    pwd
+  else
     pwd
   fi
 }
