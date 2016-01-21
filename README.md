@@ -4,7 +4,7 @@ This Docker image can be used for Jekyll build which needs to be compatible with
 ## HowTo
  - git clone https://github.com/UNwS/jekyll-docker or wget -o build -c https://raw.githubusercontent.com/UNwS/jekyll-docker/master/build
  - ./build -r {your jekyll github repo}
- - open [http://0.0.0.0:4000/](http://0.0.0.0:4000/)
+ - console show the url to open -> 
 
 ## Custom
  - Add a script "build" in repo with specific jekyll commands - build will be run insted of standard jekyll command
@@ -12,6 +12,7 @@ This Docker image can be used for Jekyll build which needs to be compatible with
  - Options
    - Generate only specific number of posts -l default: all
    - dockerimage -t {latest:bleeding} default: latest
+   - port -p default: 4000
    - help -h
 
 ## Prerequisite

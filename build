@@ -33,7 +33,7 @@ docker_run()
   mkdir /tmp/gh-pages-$this
   sudo docker pull unws/gh-pages:$tag
   cat docker-compose-$this.yml
-  sudo docker-compose -f docker-compose-$this.yml run web-$this -s $gitsrc
+  sudo docker-compose -f docker-compose-$this.yml run web-$this -s $gitsrc -p $port
 }
 
 jekyll_run()
