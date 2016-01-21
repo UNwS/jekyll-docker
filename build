@@ -76,7 +76,7 @@ jekyll_run()
 pwd_safe()
 {
   cpwd=$(pwd)
-  if [ "$cpwd" != "/html" ]
+  if [ "$cpwd" != "/html" ]; then
     echo "Looks this is running inside host .."
     cd /tmp/gh-pages-$this
     echo "Switching to temp ..."
