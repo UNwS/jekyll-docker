@@ -5,7 +5,7 @@ this=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
 exit_fuc() 
 {
-  if type "sudo" > /dev/null 2>&1 ; then
+  if type "sudo" > /dev/null 2>&1 ; then # TODO need to find a better way to identify host
     this_check=$(docker-compose ps web-$this 2> /dev/null | tail -1) 
     if [[ $this_check == *"web-$this"* ]]; then
       docker-compose rm -f web-$this
@@ -127,7 +127,10 @@ fi
 
 get_ip
 
+echo ""
 echo "-- Open http://$webip:$port/ --"
-jekyll_run > /dev/null 
+echo ""
+echo "-- CTL+C to exit --"
+jekyll_run > /dev/null
 
 exit $?
