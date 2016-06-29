@@ -30,7 +30,7 @@ COPY Gemfile Gemfile
 COPY build build
 
 # lets install all required gems
-RUN bundle config build.nokogiri --use-system-libraries
+# RUN bundle config build.nokogiri --use-system-libraries
 RUN bundle config build.jekyll --no-rdoc
 RUN bundle install
 
