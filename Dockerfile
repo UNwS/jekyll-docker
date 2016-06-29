@@ -9,7 +9,7 @@ LABEL site="unwsolution.com" \
 ENV page="https://github.com/thekkedam/vm"
 
 # Install all the dependencies for Jekyll
-RUN apk add --update bash build-base libffi-dev zlib-dev libxml2-dev \
+RUN apk add --update bash build-base libffi-dev zlib-dev libxml2 libxml2-dev \
 			libxslt-dev ruby ruby-dev ruby-io-console ruby-json \
 			yaml nodejs git perl
 
