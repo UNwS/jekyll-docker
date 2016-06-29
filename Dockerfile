@@ -22,7 +22,7 @@ RUN echo 'gem: --no-document' >> ~/.gemrc && \
 RUN gem install bundler
 
 # Install nokogiri seperate
-RUN gem install nokogiri -- --use-system-libraries --with-xml2-include=/usr/include/libxml2 --with-xml2-lib=/usr/lib/
+# RUN gem install nokogiri -- --use-system-libraries --with-xml2-include=/usr/include/libxml2 --with-xml2-lib=/usr/lib/
 
 # Get gemfile to get all suported pakage for jekyll in gethub pages
 WORKDIR /tmp
@@ -30,7 +30,7 @@ COPY Gemfile Gemfile
 COPY build build
 
 # lets install all required gems
-# RUN bundle config build.nokogiri --use-system-libraries
+RUN bundle config build.nokogiri --use-system-libraries
 RUN bundle config build.jekyll --no-rdoc
 RUN bundle install
 
