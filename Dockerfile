@@ -9,8 +9,8 @@ LABEL site="unwsolution.com" \
 ENV page="https://github.com/thekkedam/vm"
 
 # Install all the dependencies for Jekyll
-RUN apk add --update bash build-base libffi-dev zlib-dev libxml2-dev \
-			libxslt-dev ruby ruby-dev ruby-io-console ruby-json \
+RUN apk add --update bash build-base libffi libffi-dev zlib zlib-dev libxml2 libxml2-dev \
+			libxslt libxslt-dev ruby ruby-dev ruby-io-console ruby-json \
 			yaml nodejs git perl
 
 # let avoide rdoc
@@ -19,7 +19,10 @@ RUN echo 'gem: --no-document' >> ~/.gemrc && \
   chmod uog+r /etc/gemrc
 
 # Install bundler
-RUN gem install bundler 
+RUN gem install bundler
+
+# Install nokogiri seperate
+# RUN gem install nokogiri -- --use-system-libraries --with-xml2-include=/usr/include/libxml2 --with-xml2-lib=/usr/lib/
 
 # Get gemfile to get all suported pakage for jekyll in gethub pages
 WORKDIR /tmp
@@ -27,7 +30,7 @@ COPY Gemfile Gemfile
 COPY build build
 
 # lets install all required gems
-RUN bundle config build.nokogiri --use-system-libraries 
+# RUN bundle config build.nokogiri --use-system-libraries
 RUN bundle config build.jekyll --no-rdoc
 RUN bundle install
 
