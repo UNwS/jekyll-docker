@@ -22,7 +22,7 @@ gem 'jekyll-seo-tag', versions['jekyll-seo-tag']
 gem 'github-pages', versions['github-pages']
 gen 'jekyll-github-metadata', versions['jekyll-github-metadata']
 gem 'html-pipeline', versions['html-pipeline']
-gen 'listen', versions['listen']
+gem 'listen', versions['listen']
 gem 'sass', versions['sass']
 gem 'safe_yaml', versions['safe_yaml']
 gem 'html-proofer'
